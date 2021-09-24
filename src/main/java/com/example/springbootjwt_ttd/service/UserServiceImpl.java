@@ -6,6 +6,9 @@ import com.example.springbootjwt_ttd.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
 public class UserServiceImpl implements  UserService{
 
@@ -20,6 +23,22 @@ public class UserServiceImpl implements  UserService{
     @Override
     public UserPrincipal findByUsername(String username) {
 
-        return null;
+        User user = userRepository.findByUsername(username);
+        UserPrincipal userPrincipal = new UserPrincipal();
+
+        if( null != user){
+            Set<String> authorities = new HashSet<>();
+            if(null != user.getRoles())
+                user.getRoles().forEach(r ->{
+                    authorities.add(r.getRoleKey());
+                    r.getPermissions().forEach(
+                            p -> authorities.add(p.getPermissionKey()));
+                });
+            userPrincipal.setUserId(user.getId());
+            userPrincipal.setUsername(user.getUsername());
+            userPrincipal.setPassword(user.getPassword());
+            userPrincipal.setAuthorities(authorities);
+        }
+        return userPrincipal;
     }
 }

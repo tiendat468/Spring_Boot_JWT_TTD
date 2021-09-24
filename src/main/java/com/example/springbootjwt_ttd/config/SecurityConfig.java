@@ -13,6 +13,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/register")
+                .permitAll()
+                .antMatchers("/login")
                 .permitAll();
     }
 }
