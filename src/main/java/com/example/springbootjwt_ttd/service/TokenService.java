@@ -1,5 +1,7 @@
 package com.example.springbootjwt_ttd.service;
 
-public interface TokenService {
+import com.example.springbootjwt_ttd.entity.Token;
 
+public interface TokenService {
+    Token createToken(Token token);
 }
