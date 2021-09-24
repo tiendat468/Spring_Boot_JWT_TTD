@@ -13,5 +13,6 @@ import javax.persistence.Table;
 public class Permission extends BaseEntity{
 
     private  String permissionName;
+
     private String permissionKey;
 }
